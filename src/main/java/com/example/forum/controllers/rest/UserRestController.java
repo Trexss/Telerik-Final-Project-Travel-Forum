@@ -3,6 +3,7 @@ package com.example.forum.controllers.rest;
 import com.example.forum.exceptions.EntityDuplicateException;
 import com.example.forum.helpers.AuthenticationHelper;
 import com.example.forum.helpers.UserMapper;
+import com.example.forum.models.dto.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

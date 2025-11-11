@@ -3,10 +3,13 @@ package com.example.forum.controllers.rest;
 import com.example.forum.exceptions.EntityNotFoundException;
 import com.example.forum.helpers.AuthenticationHelper;
 import com.example.forum.helpers.CommentMapper;
+import com.example.forum.models.dto.CommentDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -42,6 +45,8 @@ public class CommentsRestController {
         } catch (EntityNotFoundException e) {
 
         }
+    }
+        @GetMapping("/comments/{commentId}")
     public CommentDto getCommentById(@PathVariable int commentId) {
         //toDo authentication
         try {
