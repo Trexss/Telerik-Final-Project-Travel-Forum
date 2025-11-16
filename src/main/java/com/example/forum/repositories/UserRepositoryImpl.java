@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) {
         try(Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(user);
+            session.persist(user);
             session.getTransaction().commit();
         }
 
@@ -67,7 +67,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void update(User user) {
         try(Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(user);
+            session.merge(user);
             session.getTransaction().commit();
         }
     }
