@@ -1,7 +1,7 @@
 package com.example.forum.repositories;
 
 import com.example.forum.exceptions.EntityNotFoundException;
-import org.apache.catalina.User;
+import com.example.forum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

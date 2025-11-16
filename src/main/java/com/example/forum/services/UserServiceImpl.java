@@ -3,7 +3,7 @@ package com.example.forum.services;
 import com.example.forum.exceptions.EntityDuplicateException;
 import com.example.forum.exceptions.EntityNotFoundException;
 import com.example.forum.repositories.UserRepository;
-import org.apache.catalina.User;
+import com.example.forum.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,16 +1,16 @@
 package com.example.forum.repositories;
 
-import org.apache.catalina.User;
+import com.example.forum.models.User;
 
 import java.util.List;
 
 public interface UserRepository {
 
-    List<User> get();
+    List<com.example.forum.models.User> get();
 
-    User get (int id);
+    com.example.forum.models.User get (int id);
 
-    User get (String username);
+    com.example.forum.models.User get (String username);
 
     void create (User user);
 
