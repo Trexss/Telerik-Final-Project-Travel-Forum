@@ -31,11 +31,11 @@ public class UserRestController {
     }
 
     @PostMapping
-    public UserDto createUser(@Valid @RequestBody UserDto userDto) {
+    public void createUser(@Valid @RequestBody UserDto userDto) {
 
         User user = userMapper.fromDto(userDto);
         try{
-            return usersService.createUser(user);
+           usersService.create(user);
         }catch (EntityDuplicateException e){
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
@@ -87,7 +87,7 @@ public class UserRestController {
         //toDo authorization admin only
         try{
             User user = authenticationHelper.tryGetUser(headers);
-            return usersService.getAllUsers(user);
+            return usersService.get(user);
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
@@ -99,7 +99,7 @@ public class UserRestController {
         //toDo authorization admin only
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return usersService.getUserById(id, user);
+            return usersService.get(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }catch (AuthorizationException e){
