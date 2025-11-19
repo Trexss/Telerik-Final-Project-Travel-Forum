@@ -2,6 +2,7 @@ package com.example.forum.services;
 
 import com.example.forum.exceptions.AuthorizationException;
 import com.example.forum.exceptions.EntityNotFoundException;
+import com.example.forum.helpers.AuthenticationHelper;
 import com.example.forum.models.Comment;
 import com.example.forum.models.Post;
 import com.example.forum.models.User;
@@ -17,10 +18,12 @@ import java.util.Set;
 public class CommentServiceImpl implements CommentService {
     private final PostService postService;
     private final CommentRepository commentRepository;
+    private final AuthenticationHelper authenticationHelper;
 
-    public CommentServiceImpl(PostService postService, CommentRepository commentRepository) {
+    public CommentServiceImpl(PostService postService, CommentRepository commentRepository, AuthenticationHelper authenticationHelper) {
         this.postService = postService;
         this.commentRepository = commentRepository;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @Override

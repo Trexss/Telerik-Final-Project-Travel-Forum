@@ -60,17 +60,18 @@ public class AuthenticationHelper {
 
         return userInfo.substring(firstSpace + 1);
     }
-    public User tryGetUser(HttpSession session){
-        String currentUser = (String) session.getAttribute("currentUser");
-        if (currentUser == null){
-            throw new AuthorizationException("No user logged in");
-        }
-        return userService.get(currentUser);
-
-    }
+    //toDo will be implemented once we start usin MVC
+//    public User tryGetUser(HttpSession session){
+//        String currentUser = (String) session.getAttribute("currentUser");
+//        if (currentUser == null){
+//            throw new AuthorizationException("No user logged in");
+//        }
+//        return userService.get(currentUser);
+//
+//    }
 
     public void requireAdmin(User requester) throws AuthorizationException {
-        if (requester == null || !Boolean.TRUE.equals(requester.isAdmin())) {
+        if (requester == null || !requester.isAdmin()) {
             throw new AuthorizationException("User is not authorized to perform this action.");
         }
     }
