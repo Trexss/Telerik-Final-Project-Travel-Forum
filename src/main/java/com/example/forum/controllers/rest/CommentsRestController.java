@@ -60,7 +60,7 @@ public class CommentsRestController {
         }
     }
         @GetMapping("/comments/{commentId}")
-    public CommentDto getCommentById(@PathVariable int commentId) {
+    public CommentDto getCommentById(@PathVariable int commentId, @RequestHeader HttpHeaders headers) {
 
         try {
             User user = authenticationHelper.tryGetUser(headers);
