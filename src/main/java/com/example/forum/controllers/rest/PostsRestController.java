@@ -35,14 +35,19 @@ public class PostsRestController {
                 .map(postMapper::toDto)
                 .toList();
     }
+
     @GetMapping("/{id}")
-    public PostDto getPostById(@PathVariable int id) {
+    public PostDto getPostById(@PathVariable int id, @RequestHeader HttpHeaders headers) {
         try {
+            User user = authenticationHelper.tryGetUser(headers);
             return postMapper.toDto(postsService.getPostById(id));
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
     @PostMapping
     public PostDto createPost(@Valid @RequestBody PostDto postDto, @RequestHeader HttpHeaders headers) {
         try {
@@ -50,7 +55,7 @@ public class PostsRestController {
             Post post = postMapper.fromDto(postDto);
             postsService.createPost(post, user);
             return postMapper.toDto(post);
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
@@ -66,7 +71,7 @@ public class PostsRestController {
             return postMapper.toDto(post);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
@@ -80,7 +85,10 @@ public class PostsRestController {
             postsService.deletePostById(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
+
+}
