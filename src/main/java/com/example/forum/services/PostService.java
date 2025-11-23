@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface PostService {
 
-    List<Post> get();
+    List<Post> getAllPosts();
 
-    Post get(int id);
+    Post getPostById(int id);
 
-    void create(Post post, User user);
+    void createPost(Post post, User user);
 
-    void update(Post post, User user);
+    void updatePost(Post post, User user);
 
-    void delete(int id, User user);
+    void deletePostById(int id, User user);
 
-    void addLike(int id);
+    void incrementPostLikes(int id);
 }

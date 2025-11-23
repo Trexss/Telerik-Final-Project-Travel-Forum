@@ -21,7 +21,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> get() {
+    public List<Post> getAllPosts() {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
             return query.list();
@@ -29,7 +29,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post get(int id) {
+    public Post getPostById(int id) {
         try (Session session = sessionFactory.openSession()) {
             Post post = session.get(Post.class, id);
             if (post == null) {
@@ -40,7 +40,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void create(Post post) {
+    public void createPost(Post post) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(post);
@@ -49,7 +49,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void update(Post post) {
+    public void updatePost(Post post) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.merge(post);
@@ -58,8 +58,8 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void delete(int id) {
-        Post postToDelete = get(id);
+    public void deletePostById(int id) {
+        Post postToDelete = getPostById(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.remove(postToDelete);

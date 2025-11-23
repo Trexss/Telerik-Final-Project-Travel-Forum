@@ -20,49 +20,49 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> get() {
-        return postRepository.get();
+    public List<Post> getAllPosts() {
+        return postRepository.getAllPosts();
     }
 
     @Override
-    public Post get(int id) {
-        return postRepository.get(id);
+    public Post getPostById(int id) {
+        return postRepository.getPostById(id);
     }
 
     @Override
-    public void create(Post post, User user) {
+    public void createPost(Post post, User user) {
         post.setUser(user);
-        postRepository.create(post);
+        postRepository.createPost(post);
     }
 
     @Override
-    public void update(Post post, User user) {
-        Post existingPost = postRepository.get(post.getId());
+    public void updatePost(Post post, User user) {
+        Post existingPost = postRepository.getPostById(post.getId());
 
         // Check if user is the owner or admin
         if (existingPost.getUser().getId() != user.getId() && !user.isAdmin()) {
             throw new AuthorizationException("Only the creator or admin can update this post.");
         }
 
-        postRepository.update(post);
+        postRepository.updatePost(post);
     }
 
     @Override
-    public void delete(int id, User user) {
-        Post existingPost = postRepository.get(id);
+    public void deletePostById(int id, User user) {
+        Post existingPost = postRepository.getPostById(id);
 
         // Check if user is the owner or admin
         if (existingPost.getUser().getId() != user.getId() && !user.isAdmin()) {
             throw new AuthorizationException("Only the creator or admin can delete this post.");
         }
 
-        postRepository.delete(id);
+        postRepository.deletePostById(id);
     }
 
     @Override
-    public void addLike(int id) {
-        Post post = postRepository.get(id);
+    public void incrementPostLikes(int id) {
+        Post post = postRepository.getPostById(id);
         post.setLikes(post.getLikes() + 1);
-        postRepository.update(post);
+        postRepository.updatePost(post);
     }
 }

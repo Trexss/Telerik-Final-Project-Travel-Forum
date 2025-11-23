@@ -47,13 +47,14 @@ public class PostsRestController {
     public PostDto createPost(@Valid @RequestBody PostDto postDto, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromDto(postDto);
+            postsService.createPost(post, user);
+            return postMapper.toDto(post);
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
-        Post post = postMapper.fromDto(postDto);
-        return postMapper.toDto(postsService.createPost(post));
-
     }
+
     @PutMapping("/{id}")
     public PostDto updatePost(@PathVariable int id, @Valid @RequestBody PostDto postDto, @RequestHeader HttpHeaders headers) {
 
@@ -61,26 +62,25 @@ public class PostsRestController {
         Post post = postMapper.fromDto(postDto);
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return postMapper.toDto(postsService.updatePost(id, post, user));
+            postsService.updatePost(post, user);
+            return postMapper.toDto(post);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable int id, @RequestHeader HttpHeaders headers) {
 
         //toDo authorization only own posts
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            postsService.deletePost(id, user);
+            postsService.deletePostById(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    //toDo like other peoples Posts
-    //toDo search Posts by title, content, author by Admin
-}

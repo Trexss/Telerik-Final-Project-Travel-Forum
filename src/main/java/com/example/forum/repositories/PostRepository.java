@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface PostRepository {
 
-    List<Post> get();
+    List<Post> getAllPosts();
 
-    Post get(int id);
+    Post getPostById(int id);
 
-    void create(Post post);
+    void createPost(Post post);
 
-    void update(Post post);
+    void updatePost(Post post);
 
-    void delete(int id);
+    void deletePostById(int id);
 }
