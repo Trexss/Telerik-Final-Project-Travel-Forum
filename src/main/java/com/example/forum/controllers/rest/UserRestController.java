@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/users")
@@ -87,7 +88,10 @@ public class UserRestController {
         //toDo authorization admin only
         try{
             User user = authenticationHelper.tryGetUser(headers);
-            return usersService.get(user);
+            return usersService.get(user)
+                    .stream()
+                    .map(userMapper::toDto)
+                    .collect(Collectors.toList());
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
@@ -95,11 +99,9 @@ public class UserRestController {
     }
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable int id, @RequestHeader HttpHeaders headers) {
-
-        //toDo authorization admin only
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return usersService.get(id);
+            return userMapper.toDto( usersService.get(id, user));
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }catch (AuthorizationException e){

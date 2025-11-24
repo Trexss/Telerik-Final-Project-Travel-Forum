@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> get();
+    List<User> get(User user);
 
-    User get(int id);
+    User get(int id, User user);
 
     User getByEmail(String email);
 
@@ -23,7 +23,7 @@ public interface UserService {
 
     List<UserDto> getUsers();
 
-    UserDto getUserDto(int id);
+
 
     List<UserDto> searchUsers(String username, String email, String firstName, User requester);
 }

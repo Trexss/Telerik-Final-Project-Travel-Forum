@@ -18,25 +18,23 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AuthenticationHelper authenticationHelper;
+
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
     }
 
     @Override
-    public List<User> get() {
+    public List<User> get(User user) {
+        if (!user.isAdmin()){
+            throw new AuthorizationException("Not authorized");
+        }
         return userRepository.get();
     }
 
-    @Override
-    public User get(int id) {
-        return userRepository.get(id);
-    }
 
     @Override
     public User getByEmail(String email) {
@@ -68,7 +66,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void blockUser(int id, User requester) throws  EntityNotFoundException, AuthorizationException {
-        authenticationHelper.requireAdmin(requester);
+        if (!requester.isAdmin()){
+            throw new AuthorizationException("Not authorized");
+        }
         User user = userRepository.get(id);
         user.setBlocked(true);
         userRepository.update(user);
@@ -76,7 +76,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void unblockUser(int id, User requester) {
-        authenticationHelper.requireAdmin(requester);
+        if (!requester.isAdmin()){
+            throw new AuthorizationException("Not authorized");
+        }
         User user = userRepository.get(id);
         user.setBlocked(false);
         userRepository.update(user);
@@ -88,11 +90,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.get().stream().map(userMapper :: toDto).collect(Collectors.toList());
     }
 
+
     @Override
-    public UserDto getUserDto(int id) {
-        //authenticationHelper.requireAdmin(requester);
-        User user = userRepository.get(id);
-        return userMapper.toDto(user);
+    public User get(int id, User user) {
+        if (!user.isAdmin()){
+            throw new AuthorizationException("Not authorized");
+        }
+        return userRepository.get(id);
     }
 
     @Override
