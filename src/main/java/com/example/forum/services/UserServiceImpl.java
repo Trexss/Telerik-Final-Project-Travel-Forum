@@ -38,12 +38,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) {
-        return userRepository.get(email);
+        return userRepository.getByEmail(email);
     }
 
     @Override
     public User getByUsername(String username) {
-        return userRepository.get(username);
+        return userRepository.getByUsername(username);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         boolean userExists = true;
 
         try{
-            userRepository.get(user.getUsername());
+            userRepository.getByUsername(user.getUsername());
         } catch(EntityNotFoundException e){
             userExists = false;
         }

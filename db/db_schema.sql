@@ -1,108 +1,73 @@
-create table tags
+CREATE TABLE tags
 (
-    id   int auto_increment
-        primary key,
-    name varchar(64) not null,
-    constraint tags_uk_name
-        unique (name)
+    id   INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(64) NOT NULL UNIQUE
 );
 
-create table users
+CREATE TABLE users
 (
-    id            int auto_increment
-        primary key,
-    username      varchar(32)          not null,
-    first_name    varchar(32)          not null,
-    last_name     varchar(32)          not null,
-    email         varchar(255)         not null,
-    password      varchar(255)         not null,
-    phone_number  varchar(32)          null,
-    profile_photo varchar(1024)        null,
-    is_admin      tinyint(1) default 0 not null,
-    is_blocked    tinyint(1) default 0 not null,
-    constraint users_uk_email
-        unique (email),
-    constraint users_uk_username
-        unique (username),
-    constraint check_size_first_name
-        check (char_length(`first_name` between 4 and 32)),
-    constraint check_size_last_name
-        check (char_length(`last_name` between 4 and 32)),
-    constraint check_size_username
-        check (char_length(`username` between 4 and 32))
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    username      VARCHAR(32) NOT NULL UNIQUE,
+    first_name    VARCHAR(32) NOT NULL,
+    last_name     VARCHAR(32) NOT NULL,
+    email         VARCHAR(255) NOT NULL UNIQUE,
+    password      VARCHAR(255) NOT NULL,
+    phone_number  VARCHAR(32),
+    profile_photo VARCHAR(1024),
+    is_admin      TINYINT(1) DEFAULT 0 NOT NULL,
+    is_blocked    TINYINT(1) DEFAULT 0 NOT NULL,
+    CONSTRAINT check_size_first_name CHECK (CHAR_LENGTH(first_name) BETWEEN 4 AND 32),
+    CONSTRAINT check_size_last_name CHECK (CHAR_LENGTH(last_name) BETWEEN 4 AND 32),
+    CONSTRAINT check_size_username CHECK (CHAR_LENGTH(username) BETWEEN 4 AND 32)
 );
 
-create table posts
+CREATE TABLE posts
 (
-    id         int auto_increment
-        primary key,
-    user_id    int                                  not null,
-    title      varchar(255)                         not null,
-    content    text                                 not null,
-    created_at datetime default current_timestamp() not null,
-    updated_at datetime default current_timestamp() not null on update current_timestamp(),
-    constraint posts_users_id_fk
-        foreign key (user_id) references users (id),
-    constraint check_content_size
-        check (char_length(`content` between 32 and 8192)),
-    constraint check_title_size
-        check (char_length(`title` between 16 and 64))
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT NOT NULL,
+    title      VARCHAR(255) NOT NULL,
+    content    TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP(),
+    CONSTRAINT posts_users_id_fk FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT check_content_size CHECK (CHAR_LENGTH(content) BETWEEN 32 AND 8192),
+    CONSTRAINT check_title_size CHECK (CHAR_LENGTH(title) BETWEEN 16 AND 64)
 );
 
-create table comments
+CREATE INDEX index_created_at ON posts (created_at);
+CREATE INDEX index_user_id ON posts (user_id);
+
+CREATE TABLE comments
 (
-    id         int auto_increment
-        primary key,
-    post_id    int                                  not null,
-    user_id    int                                  null,
-    content    text                                 not null,
-    created_at datetime default current_timestamp() not null,
-    constraint comments___fk_post_id
-        foreign key (post_id) references posts (id),
-    constraint comments___fk_user_id
-        foreign key (user_id) references users (id),
-    constraint check_content_size
-        check (char_length(`content` between 1 and 2048))
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    post_id    INT NOT NULL,
+    user_id    INT,
+    content    TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT comments_fk_post_id FOREIGN KEY (post_id) REFERENCES posts(id),
+    CONSTRAINT comments_fk_user_id FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT check_comment_content_size CHECK (CHAR_LENGTH(content) BETWEEN 1 AND 2048)
 );
 
-create index index_post_id
-    on comments (post_id);
+CREATE INDEX index_post_id ON comments (post_id);
+CREATE INDEX index_comment_user_id ON comments (user_id);
 
-create index index_user_id
-    on comments (user_id);
-
-create table post_likes
+CREATE TABLE post_likes
 (
-    user_id int not null,
-    post_id int not null,
-    primary key (user_id, post_id),
-    constraint post_likes___fk_post_id
-        foreign key (post_id) references posts (id)
-            on delete cascade,
-    constraint post_likes___fk_user_id
-        foreign key (user_id) references users (id)
-            on delete cascade
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    PRIMARY KEY (user_id, post_id),
+    CONSTRAINT post_likes_fk_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    CONSTRAINT post_likes_fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-create index index_post_Id
-    on post_likes (post_id);
+CREATE INDEX index_postLikes_post_id ON post_likes (post_id);
 
-create table post_tags
+CREATE TABLE post_tags
 (
-    post_id int not null,
-    tag_id  int not null,
-    primary key (post_id, tag_id),
-    constraint post_tags___fk_post_id
-        foreign key (post_id) references posts (id)
-            on delete cascade,
-    constraint post_tags___fk_tag_id
-        foreign key (tag_id) references tags (id)
-            on delete cascade
+    post_id INT NOT NULL,
+    tag_id  INT NOT NULL,
+    PRIMARY KEY (post_id, tag_id),
+    CONSTRAINT post_tags_fk_post_id FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    CONSTRAINT post_tags_fk_tag_id FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
-
-create index index_created_at
-    on posts (created_at);
-
-create index index_user_id
-    on posts (user_id);
-

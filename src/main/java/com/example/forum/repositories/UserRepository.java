@@ -10,7 +10,8 @@ public interface UserRepository {
 
     com.example.forum.models.User get (int id);
 
-    com.example.forum.models.User get (String username);
+    com.example.forum.models.User getByEmail (String email);
+    User getByUsername(String username);
 
     void create (User user);
 

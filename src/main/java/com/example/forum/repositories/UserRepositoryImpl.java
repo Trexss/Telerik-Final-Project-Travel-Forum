@@ -40,7 +40,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(String username) {
+    public User getByEmail(String email) {
+        try (Session session = this.sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User u where u.email = :email", User.class);
+            query.setParameter("email", email);
+            User user = query.uniqueResult();
+            if (user == null) {
+                throw new EntityNotFoundException("User","Email", email);
+            }
+            return user;
+        }
+    }
+    @Override
+    public User getByUsername(String username) {
         try(Session session = this.sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User where username = :username", User.class);
             query.setParameter("username", username);
@@ -52,6 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
             return list.get(0);
         }
     }
+
 
     @Override
     public void create(User user) {
