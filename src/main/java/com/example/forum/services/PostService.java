@@ -11,6 +11,8 @@ public interface PostService {
 
     Post getPostById(int id);
 
+    Post getPostByIdWithComments(int id);
+
     void createPost(Post post, User user);
 
     void updatePost(Post post, User user);

@@ -40,6 +40,22 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public Post getPostByIdWithComments(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery(
+                    "SELECT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id = :id",
+                    Post.class
+            );
+            query.setParameter("id", id);
+            Post post = query.uniqueResult();
+            if (post == null) {
+                throw new EntityNotFoundException("Post", id);
+            }
+            return post;
+        }
+    }
+
+    @Override
     public void createPost(Post post) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

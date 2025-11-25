@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/PageLayout.html :: head(${post.title})}"></head>
+<body>
+<header th:replace="~{fragments/PageLayout.html :: header}"></header>
+
+<div class="body-content">
+    <h2 th:text="${post.title}">Post Title</h2>
+    <div th:style="text-align">
+        <p class="margin12" th:text="#{post.content} + ': ' +      ${post.content}">Content</p>
+        <p class="margin12" th:text="#{post.created-by}  + ': ' + ${post.user.username}">Username</p>
+    </div>
+
+<!--    Below can be made to delete or update post to be used only by admins-->
+<!--    which is not yet implemented-->
+<!--    <h3>-->
+<!--        &lt;!&ndash;    <a href="#" th:href="@{/beers/{id}/update(id=${beer.id})}">Update</a>&ndash;&gt;-->
+<!--        &lt;!&ndash;    <a href="#" th:href="@{/beers/{id}/delete(id=${beer.id})}">Delete</a>&ndash;&gt;-->
+<!--        <a href="#" th:href="@{__${requestURI}__/update}">Update</a>-->
+<!--        <a href="#" th:href="@{__${requestURI}__/delete}">Delete</a>-->
+<!--    </h3>-->
+
+    <!-- Comments Section -->
+    <hr>
+    <div class="comments-section">
+        <h3 th:text="#{comments.title}">Comments</h3>
+
+        <!-- Show message if no comments -->
+        <div th:if="${post.comments.isEmpty()}">
+            <p th:text="#{comments.empty}">No comments yet</p>
+        </div>
+
+        <!-- Loop through all comments -->
+        <div th:unless="${post.comments.isEmpty()}">
+            <div class="comment" th:each="comment : ${post.comments}">
+                <p class="comment-content" th:text="${comment.content}">Comment content here</p>
+                <p class="comment-meta">
+                    <span th:text="#{comment.user} + ' ' + ${comment.user.username}">By username</span>
+                    <span> | </span>
+                    <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">Posted on date</span>
+                </p>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/PageLayout.html :: footer}"></footer>
+</body>
+</html>

@@ -30,6 +30,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post getPostByIdWithComments(int id) {
+        return postRepository.getPostByIdWithComments(id);
+    }
+
+    @Override
     public void createPost(Post post, User user) {
         post.setUser(user);
         postRepository.createPost(post);

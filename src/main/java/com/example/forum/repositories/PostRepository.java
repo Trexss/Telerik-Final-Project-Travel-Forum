@@ -10,6 +10,8 @@ public interface PostRepository {
 
     Post getPostById(int id);
 
+    Post getPostByIdWithComments(int id);
+
     void createPost(Post post);
 
     void updatePost(Post post);
