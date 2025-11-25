@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/PageLayout.html:: head('All Posts')}"></head>
+<body>
+<header th:replace="~{fragments/PageLayout.html :: header}"></header>
+
+<div class="body-content">
+    <div th:if="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title.empty}">No Posts</h2>
+    </div>
+    <div th:unless="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title}">All Posts</h2>
+
+        <div class="table">
+            <div class="header">
+                <div class="header-cell" th:text="#{post.title}">Post Title</div>
+                <div class="header-cell" th:text="#{post.likes}">Likes</div>
+                <div class="header-cell" th:text="#{post.created-by}">Created by</div>
+            </div>
+            <div class="row" th:each="post : ${posts}">
+                <div class="cell">
+                    <a href="#" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">Post</a>
+                </div>
+                <div class="cell" th:text="${post.likes}">0</div>
+                <div class="cell" th:text="${post.user.username}">Created by</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/PageLayout.html :: footer}"></footer>
+</body>
+</html>
