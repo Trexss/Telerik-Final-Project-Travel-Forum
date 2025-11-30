@@ -60,15 +60,28 @@ public class AuthenticationHelper {
 
         return userInfo.substring(firstSpace + 1);
     }
-    //toDo will be implemented once we start usin MVC
-//    public User tryGetUser(HttpSession session){
-//        String currentUser = (String) session.getAttribute("currentUser");
-//        if (currentUser == null){
-//            throw new AuthorizationException("No user logged in");
-//        }
-//        return userService.get(currentUser);
-//
-//    }
+
+    public User tryGetCurrentUser(HttpSession session) {
+        String currentUser = (String) session.getAttribute("currentUser");
+
+        if (currentUser == null) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+
+        return userService.getByEmail(currentUser);
+    }
+
+    public User verifyAuthentication(String email, String password) {
+        try {
+            User user = userService.getByEmail(email);
+            if (!user.getPassword().equals(password)) {
+                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+            }
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+    }
 
     public void requireAdmin(User requester) throws AuthorizationException {
         if (requester == null || !requester.isAdmin()) {

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<form th:replace="~{fragments/PageLayout :: head('Home')}"></form>
+<body>
+<form th:replace="~{fragments/PageLayout :: header}"></form>
+
+<div class="body-content">
+    <h1>Welcome to the Forum</h1>
+    <p>Browse posts or sign in to participate.</p>
+
+    <p>
+        <a th:href="@{/posts}" class="ui-button">View Posts</a>
+        <a th:href="@{/user/login}" class="ui-button">Login</a>
+    </p>
+</div>
+
+<div th:replace="fragments/PageLayout :: footer"></div>
+
+</body>
+</html>
