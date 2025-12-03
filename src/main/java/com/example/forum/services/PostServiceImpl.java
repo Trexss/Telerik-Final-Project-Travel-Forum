@@ -5,6 +5,7 @@ import com.example.forum.models.Post;
 import com.example.forum.models.User;
 import com.example.forum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,5 +73,8 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getPostById(id);
         post.setLikes(post.getLikes() + 1);
         postRepository.updatePost(post);
+    }
+    public List<Post> getAllPostsSorted(String sortBy, String order) {
+        return postRepository.getAllPostsSorted(sortBy, order);
     }
 }

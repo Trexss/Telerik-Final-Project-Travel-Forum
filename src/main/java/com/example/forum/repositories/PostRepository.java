@@ -17,4 +17,5 @@ public interface PostRepository {
     void updatePost(Post post);
 
     void deletePostById(int id);
+    List<Post> getAllPostsSorted(String sortBy, String order);
 }

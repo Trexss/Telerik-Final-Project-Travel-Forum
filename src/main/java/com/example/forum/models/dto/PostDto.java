@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+
 public class PostDto {
 
     private Integer id;
@@ -19,6 +21,8 @@ public class PostDto {
     @NotBlank(message = "Content is required")
     @Size(min = 32, max = 8192, message = "Content must be between 32 and 8192 symbols")
     private String content;
+
+    private LocalDateTime createdAt;
 
     public PostDto() {
     }
@@ -53,6 +57,14 @@ public class PostDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
 

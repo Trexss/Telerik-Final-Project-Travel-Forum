@@ -13,6 +13,7 @@ public class PostMapper {
         dto.setUserId(post.getUser() != null ? post.getUser().getId() : null);
         dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
+        dto.setCreatedAt(post.getCreatedAt());
         return dto;
     }
 
@@ -22,6 +23,7 @@ public class PostMapper {
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
         // User will be set by the service/controller layer
+        // createdAt will be set automatically by @PrePersist
         return post;
     }
 }

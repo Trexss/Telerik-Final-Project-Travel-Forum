@@ -40,8 +40,15 @@ public class PostMvcController {
         this.postMapper = postMapper;
     }
     @GetMapping
-    public String showAllPosts(Model model) {
-        model.addAttribute("posts", postService.getAllPosts());
+    public String showAllPosts(
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String order,
+            Model model) {
+
+        model.addAttribute("posts", postService.getAllPostsSorted(sortBy, order));
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("order", order);
+
         return "PostsView";
     }
     @GetMapping("/{id}")

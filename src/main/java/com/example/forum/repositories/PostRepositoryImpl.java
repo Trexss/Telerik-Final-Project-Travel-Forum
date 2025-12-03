@@ -27,6 +27,25 @@ public class PostRepositoryImpl implements PostRepository {
             return query.list();
         }
     }
+    @Override
+    public List<Post> getAllPostsSorted(String sortBy, String order) {
+        try (Session session = sessionFactory.openSession()) {
+
+            // Validate fields to avoid HQL injection
+            if (!sortBy.equals("createdAt") && !sortBy.equals("likes")) {
+                sortBy = "createdAt";
+            }
+            if (!order.equalsIgnoreCase("asc") && !order.equalsIgnoreCase("desc")) {
+                order = "desc";
+            }
+
+            String hql = "from Post p order by p." + sortBy + " " + order;
+
+            Query<Post> query = session.createQuery(hql, Post.class);
+
+            return query.list();
+        }
+    }
 
     @Override
     public Post getPostById(int id) {
