@@ -138,6 +138,19 @@ public class PostMvcController {
             return "ErrorView";
         }
     }
+    @PostMapping("/{id}/delete")
+    public String deletePost(@PathVariable int id, HttpSession session, Model model) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+            postService.deletePostById(id, user);
+            return "redirect:/posts";
+        } catch (EntityNotFoundException | AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
 
 
 }
