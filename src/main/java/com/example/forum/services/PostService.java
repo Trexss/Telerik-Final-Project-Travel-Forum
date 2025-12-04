@@ -20,5 +20,8 @@ public interface PostService {
     void deletePostById(int id, User user);
 
     void incrementPostLikes(int id);
+
     List<Post> getAllPostsSorted(String sortBy, String order);
+
+    List<Post> getTopCommentedPosts(int limit);
 }

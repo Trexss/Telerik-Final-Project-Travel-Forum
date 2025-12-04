@@ -1,21 +1,126 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{fragments/PageLayout :: head('Home')}"></form>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Forum - Home</title>
+</head>
 <body>
-<form th:replace="~{fragments/PageLayout :: header}"></form>
 
-<div class="body-content">
-    <h1>Welcome to the Forum</h1>
-    <p>Browse posts or sign in to participate.</p>
+<header>
+    <h1>Welcome to the Travel Forum</h1>
+    <p>Share your travel stories, tips, and recommendations.</p>
+</header>
 
-    <p>
-        <a th:href="@{/posts}" class="ui-button">View Posts</a>
-        <a th:href="@{/user/login}" class="ui-button">Login</a>
-        <a th:href="@{/user/register}" class="ui-button">Register</a>
-    </p>
-</div>
+<main>
 
-<div th:replace="fragments/PageLayout :: footer"></div>
+    <!-- Summary statistics -->
+    <section>
+        <h2>Platform statistics</h2>
+        <p>
+            <strong>Total users:</strong>
+            <span th:text="${totalUsers}">0</span>
+        </p>
+        <p>
+            <strong>Total posts:</strong>
+            <span th:text="${totalPosts}">0</span>
+        </p>
+    </section>
+
+    <!-- Authentication section -->
+    <section>
+        <h2>Your account</h2>
+
+        <!-- If user is not logged in -->
+        <div th:if="${currentUser == null}">
+            <p>
+                <a th:href="@{/login}">Log in</a>
+                or
+                <a th:href="@{/register}">Register</a>
+                to start posting.
+            </p>
+        </div>
+
+        <!-- If user is logged in -->
+        <div th:if="${currentUser != null}">
+            <p>
+                Logged in as:
+                <strong th:text="${currentUser.username}">username</strong>
+                (<span th:text="${currentUser.firstName}">First</span>
+                <span th:text="${currentUser.lastName}">Last</span>)
+            </p>
+            <p>
+                <a th:href="@{/logout}">Log out</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Top 10 most commented posts -->
+<!--    <section>-->
+<!--        <h2>Top 10 most commented posts</h2>-->
+
+<!--        <div th:if="${#lists.isEmpty(topCommentedPosts)}">-->
+<!--            <p>No posts yet.</p>-->
+<!--        </div>-->
+
+<!--        <ul th:if="${!#lists.isEmpty(topCommentedPosts)}">-->
+<!--            <li th:each="post : ${topCommentedPosts}">-->
+<!--                <a th:href="@{|/posts/${post.id}|}"-->
+<!--                   th:text="${post.title}">Post title</a>-->
+<!--                <span>Comments:</span>-->
+<!--                <span th:text="${#lists.size(post.comments)}">0</span>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </section>-->
+
+
+
+    <!-- 10 most recent posts -->
+    <section>
+        <h2>10 most recent posts</h2>
+
+        <div th:if="${#lists.isEmpty(recentPosts)}">
+            <p>No recent posts.</p>
+        </div>
+
+        <ul th:if="${!#lists.isEmpty(recentPosts)}">
+            <li th:each="post : ${recentPosts}">
+                <a th:href="@{|/posts/${post.id}|}"
+                   th:text="${post.title}">Post title</a>
+                -
+                <span>Created at:</span>
+                <span th:text="${post.createdAt}">2025-01-01T12:00</span>
+            </li>
+        </ul>
+    </section>
+
+</main>
 
 </body>
 </html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<form th:replace="~{fragments/PageLayout :: head('Home')}"></form>-->
+<!--<body>-->
+<!--<form th:replace="~{fragments/PageLayout :: header}"></form>-->
+
+<!--<div class="body-content">-->
+<!--    <h1>Welcome to the Forum</h1>-->
+<!--    <p>Browse posts or sign in to participate.</p>-->
+
+<!--    <p>-->
+<!--        <a th:href="@{/posts}" class="ui-button">View Posts</a>-->
+<!--        <a th:href="@{/user/login}" class="ui-button">Login</a>-->
+<!--        <a th:href="@{/user/register}" class="ui-button">Register</a>-->
+<!--    </p>-->
+<!--</div>-->
+
+<!--<div th:replace="fragments/PageLayout :: footer"></div>-->
+
+<!--</body>-->
+<!--</html>-->

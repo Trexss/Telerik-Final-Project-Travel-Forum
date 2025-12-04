@@ -77,4 +77,10 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllPostsSorted(String sortBy, String order) {
         return postRepository.getAllPostsSorted(sortBy, order);
     }
+
+    @Override
+    public List<Post> getTopCommentedPosts(int limit) {
+        return postRepository.getTopCommentedPosts(limit);
+    }
+
 }
