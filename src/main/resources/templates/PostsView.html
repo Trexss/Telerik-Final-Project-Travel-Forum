@@ -53,6 +53,20 @@
                 </div>
             </div>
         </div>
+        <div class="pagination">
+            <a th:href="@{/posts(page=${page - 1}, sortBy=${sortBy}, order=${order})}"
+               th:if="${page > 1}">Previous</a>
+
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:href="@{/posts(page=${i}, sortBy=${sortBy}, order=${order})}"
+           th:text="${i}"
+           th:classappend="${i == page} ? 'active' : ''">
+        </a>
+    </span>
+
+            <a th:href="@{/posts(page=${page + 1}, sortBy=${sortBy}, order=${order})}"
+               th:if="${page < totalPages}">Next</a>
+        </div>
     </div>
 </div>
 

@@ -43,11 +43,20 @@ public class PostMvcController {
     public String showAllPosts(
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String order,
+            @RequestParam(defaultValue = "1") int page,
             Model model) {
 
-        model.addAttribute("posts", postService.getAllPostsSorted(sortBy, order));
+        int pageSize = 10;
+        long totalPosts = postService.getTotalPosts();
+        int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
+
+        model.addAttribute("posts",
+                postService.getAllPostsPaged(sortBy, order, page, pageSize));
+
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("order", order);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPages", totalPages);
 
         return "PostsView";
     }

@@ -24,4 +24,6 @@ public interface PostService {
     List<Post> getAllPostsSorted(String sortBy, String order);
 
     List<Post> getTopCommentedPosts(int limit);
+    public List<Post> getAllPostsPaged(String sortBy, String order, int page, int pageSize);
+    public long getTotalPosts();
 }

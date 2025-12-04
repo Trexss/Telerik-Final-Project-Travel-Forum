@@ -82,5 +82,12 @@ public class PostServiceImpl implements PostService {
     public List<Post> getTopCommentedPosts(int limit) {
         return postRepository.getTopCommentedPosts(limit);
     }
+    public List<Post> getAllPostsPaged(String sortBy, String order, int page, int pageSize) {
+        return postRepository.getAllPostsPaged(sortBy, order, page, pageSize);
+    }
+
+    public long getTotalPosts() {
+        return postRepository.countPosts();
+    }
 
 }
