@@ -167,6 +167,32 @@ public class PostMvcController {
             return "ErrorView";
         }
     }
+    @PostMapping("/{id}/like")
+    public String likePost(@PathVariable int id, HttpSession session, Model model) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/user/login";
+        }
+
+        try {
+            postService.incrementPostLikes(id, user);
+            return "redirect:/posts/" + id;
+        } catch (AuthorizationException e) {
+            // User already liked this post - show error on the same page
+            Post post = postService.getPostByIdWithComments(id);
+            model.addAttribute("post", post);
+            model.addAttribute("comment", new CommentDto());
+            model.addAttribute("currentUser", user);
+            model.addAttribute("likeError", "You have already liked this post");
+            return "PostView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
 
 
 }

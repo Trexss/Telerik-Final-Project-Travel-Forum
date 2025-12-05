@@ -9,6 +9,15 @@
     <div th:style="text-align">
         <p class="margin12" th:text="#{post.content} + ': ' +      ${post.content}">Content</p>
         <p class="margin12" th:text="#{post.created-by}  + ': ' + ${post.user.username}">Username</p>
+        <p class="margin12" th:text="#{post.likes} + ': ' + ${post.likes}">Likes</p>
+    </div>
+
+    <!-- Like Post button - only visible to logged in users-->
+    <div th:if="${currentUser != null}">
+        <form th:action="@{/posts/{id}/like(id=${post.id})}" method="post" style="display: inline;">
+            <button type="submit">Like Post</button>
+        </form>
+        <span th:if="${likeError != null}" style="color: red; margin-left: 10px;" th:text="${likeError}">Error message</span>
     </div>
 
     <!-- Edit Post button - only visible to post creator-->
@@ -22,6 +31,9 @@
         <form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.');">
             <button type="submit">Delete Post</button>
         </form>
+    </div>
+    <div id="comment-advice" th:if="${session.currentUser == null}">
+        <h4 th:text="#{comments.login-to-comment}">Please log in to add a comment.</h4>
     </div>
 
     <div id="comment-input" th:if="${session.currentUser != null}">

@@ -1,9 +1,11 @@
 package com.example.forum.repositories;
 
 import com.example.forum.exceptions.EntityNotFoundException;
+import com.example.forum.exceptions.EntityNotFoundException;
 import com.example.forum.models.Post;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,6 +62,31 @@ public class PostRepositoryImpl implements PostRepository {
     public long countPosts() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("SELECT COUNT(p) FROM Post p", Long.class).getSingleResult();
+        }
+    }
+
+    @Override
+    public boolean checkIfPostIsLikedByUser(int postId, int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            String sql = "SELECT COUNT(*) FROM post_likes WHERE post_id = :postId AND user_id = :userId";
+            Long count = session.createNativeQuery(sql, Long.class)
+                    .setParameter("postId", postId)
+                    .setParameter("userId", userId)
+                    .getSingleResult();
+            return count > 0;
+        }
+    }
+
+    @Override
+    public void addLikeToPost(int postId, int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String sql = "INSERT INTO post_likes (post_id, user_id) VALUES (:postId, :userId)";
+            session.createNativeQuery(sql)
+                    .setParameter("postId", postId)
+                    .setParameter("userId", userId)
+                    .executeUpdate();
+            transaction.commit();
         }
     }
 

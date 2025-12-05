@@ -19,7 +19,7 @@ public interface PostService {
 
     void deletePostById(int id, User user);
 
-    void incrementPostLikes(int id);
+    void incrementPostLikes(int id, User user);
 
     List<Post> getAllPostsSorted(String sortBy, String order);
 

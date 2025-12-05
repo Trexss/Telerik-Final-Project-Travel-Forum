@@ -69,10 +69,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void incrementPostLikes(int id) {
+    public void incrementPostLikes(int id, User user) {
+        if (postRepository.checkIfPostIsLikedByUser(id, user.getId())) {
+            throw new AuthorizationException("User has already liked this post.");
+        }
         Post post = postRepository.getPostById(id);
         post.setLikes(post.getLikes() + 1);
         postRepository.updatePost(post);
+        postRepository.addLikeToPost(id, user.getId());
     }
     public List<Post> getAllPostsSorted(String sortBy, String order) {
         return postRepository.getAllPostsSorted(sortBy, order);
