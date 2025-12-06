@@ -216,12 +216,10 @@ a:hover {
 section {
     background: rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     box-shadow: var(--shadow-md);
     backdrop-filter: blur(10px);
-    max-width: 100%;
-    width: 100%;
 }
 
 section h2 {
@@ -1019,4 +1017,37 @@ section hr {
     border-top: 2px solid rgba(255, 255, 255, 0.2);
     margin: var(--spacing-2xl) 0 var(--spacing-xl) 0;
 }
+/* Center the admin users table */
+.admin-users-table-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
 
+/* Table container */
+.admin-users-table-wrapper table {
+    background: rgba(255, 255, 255, 0.60);
+    border-radius: 14px;
+    padding: 12px;
+    border-collapse: collapse;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    color: #000;                /* black text */
+    font-weight: 700;           /* bold */
+}
+
+/* Table cells */
+.admin-users-table-wrapper table th,
+.admin-users-table-wrapper table td {
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.20);  /* darker border for contrast */
+    color: #000;                /* black text */
+    font-weight: 700;           /* bold */
+}
+
+/* Header row */
+.admin-users-table-wrapper table th {
+    background: rgba(242, 242, 242, 0.25); /* toned down background */
+    color: #000;                           /* black text */
+    font-weight: 700;                      /* bold */
+}
