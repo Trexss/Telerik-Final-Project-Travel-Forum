@@ -183,6 +183,7 @@ main {
 
 .body-content p {
     color: #ffffff;
+    font-weight: 600;
 }
 
 .body-content a {
@@ -238,6 +239,7 @@ section h2::before {
 section p {
     margin: var(--spacing-sm) 0;
     color: #ffffff;
+    font-weight: 600;
 }
 
 section ul {
@@ -248,6 +250,7 @@ section ul {
 section li {
     margin-bottom: var(--spacing-sm);
     color: #ffffff;
+    font-weight: 600;
 }
 
 section a {
@@ -282,6 +285,7 @@ section strong {
 
 .about-section p {
     color: #ffffff;
+    font-weight: 600;
 }
 
 .about-section ul {
@@ -290,10 +294,23 @@ section strong {
 
 .about-section li {
     color: #ffffff;
+    font-weight: 600;
 }
 
 .about-section strong {
     color: #ffffff;
+}
+
+.about-section a {
+    color: var(--sky-blue);
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-decoration: underline;
+}
+
+.about-section a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
 
 /* ============================================
