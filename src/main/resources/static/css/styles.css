@@ -87,7 +87,8 @@ body::before {
 /* ============================================
    HEADER / NAVIGATION
    ============================================ */
-header {
+/* Navigation header (from PageLayout fragment) - should be sticky */
+body > header:first-child {
     background: linear-gradient(135deg, var(--mountain-blue) 0%, #2d5a87 100%);
     padding: var(--spacing-md) var(--spacing-xl);
     box-shadow: var(--shadow-lg);
@@ -96,7 +97,7 @@ header {
     z-index: 100;
 }
 
-header > div {
+body > header:first-child > div {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -104,7 +105,7 @@ header > div {
     align-items: center;
 }
 
-header h3 {
+body > header:first-child h3 {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
@@ -113,7 +114,7 @@ header h3 {
     align-items: center;
 }
 
-header h3 a {
+body > header:first-child h3 a {
     color: #ffffff;
     text-decoration: none;
     padding: var(--spacing-sm) var(--spacing-md);
@@ -124,7 +125,7 @@ header h3 a {
     background: rgba(255, 255, 255, 0.1);
 }
 
-header h3 a:hover {
+body > header:first-child h3 a:hover {
     background: rgba(255, 255, 255, 0.25);
     transform: translateY(-1px);
 }
@@ -657,12 +658,12 @@ body:has(main > section:only-child) main {
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 768px) {
-    header h3 {
+    body > header:first-child h3 {
         flex-direction: column;
         gap: var(--spacing-xs);
     }
     
-    header h3 a {
+    body > header:first-child h3 a {
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: 0.9rem;
     }
