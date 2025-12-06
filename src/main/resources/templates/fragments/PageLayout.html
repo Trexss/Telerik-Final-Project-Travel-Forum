@@ -12,15 +12,24 @@
             <a href="#" th:href="@{/posts}" th:text="#{navigation.posts} + ' | '">Posts</a>
             <a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post} + ' | '">Create a post | </a>
             <a href="#" th:href="@{/about}" th:text="#{navigation.about}">About</a>
+
             <a th:if="${session.currentUser}"
                th:href="@{/user/logout}"
                th:text="#{navigation.logout}">Logout</a>
+
             <a th:unless="${session.currentUser}"
                th:href="@{/user/login}"
-               th:text="#{navigation.login}">login</a>
+               th:text="#{navigation.login}">Login</a>
+
             <a th:unless="${session.currentUser}"
                th:href="@{/user/register}"
                th:text="#{navigation.register}">Register</a>
+
+            <a th:if="${session.currentUser != null and session.currentUser.admin}"
+               th:href="@{/admin/users}"
+               th:text="#{navigation.admin}">Admin Panel
+
+            </a>
         </h3>
     </div>
 </header>
