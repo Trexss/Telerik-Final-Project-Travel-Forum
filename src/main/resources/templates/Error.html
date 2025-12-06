@@ -2,57 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${status} + ' ' + ${error}">Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${status} + ' - ' + ${error}">Error</title>
+    <link href="../../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link rel="icon" type="image/png" th:href="@{/images/LogoLeftCorner.png}"/>
 </head>
 <body>
 
-<header>
-    <h1>Something went wrong</h1>
-</header>
-
 <main>
-    <!-- HTTP status code and reason phrase, if provided by the controller -->
-    <section>
-        <p>
+    <section class="text-center">
+        <h1 style="font-size: 3rem; margin-bottom: 8px;">⚠️ Oops!</h1>
+        <h2 style="color: #64748b; font-weight: 400;">Something went wrong</h2>
+        
+        <p style="margin-top: 24px;">
             <strong>Status:</strong>
             <span th:text="${status}">500</span>
-            -
+            —
             <span th:text="${error}">Internal Server Error</span>
         </p>
-    </section>
 
-    <!-- Human-readable error message -->
-    <section>
         <p>
             <strong>Message:</strong>
             <span th:text="${message}">An unexpected error occurred.</span>
         </p>
-    </section>
 
-    <!-- Optional extra information often available in error attributes -->
-    <section>
-        <p>
+        <p class="text-muted">
             <strong>Path:</strong>
             <span th:text="${path}">/some/url</span>
         </p>
-        <p>
-            <strong>Time:</strong>
-            <span th:text="${timestamp}">2025‑01‑01T12:00:00</span>
-        </p>
-    </section>
 
-    <!-- If you pass an exception object, you can show its message too -->
-    <section th:if="${exception}">
-        <p>
+        <p class="text-muted">
+            <strong>Time:</strong>
+            <span th:text="${timestamp}">2025-01-01T12:00:00</span>
+        </p>
+
+        <p th:if="${exception}" class="text-muted">
             <strong>Details:</strong>
             <span th:text="${exception}"></span>
         </p>
-    </section>
 
-    <!-- Navigation -->
-    <section>
-        <p>
-            <a th:href="@{/}">Back to Home</a>
+        <p class="mt-lg">
+            <a th:href="@{/}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">🏠 Back to Home</a>
         </p>
     </section>
 </main>
