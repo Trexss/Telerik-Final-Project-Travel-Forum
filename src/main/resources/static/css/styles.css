@@ -169,8 +169,9 @@ main {
 }
 
 .body-content h1, .body-content h2 {
-    color: #ffffff;
+    color: #7dd3fc;
     margin-top: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .body-content h1 {
@@ -227,12 +228,13 @@ section {
 }
 
 section h2 {
-    color: #ffffff;
+    color: #7dd3fc;
     margin-top: 0;
     font-size: 1.3rem;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 section h2::before {
@@ -258,13 +260,14 @@ section li {
 }
 
 section a {
-    color: var(--sky-blue);
+    color: #1e40af;
     font-weight: 700;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 section a:hover {
-    color: #ffffff;
+    color: #1e3a8a;
+    text-decoration: underline;
 }
 
 section strong {
@@ -273,7 +276,7 @@ section strong {
 
 /* About section styling */
 .about-section {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.07);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
@@ -282,10 +285,11 @@ section strong {
 }
 
 .about-section h2 {
-    color: #ffffff;
+    color: #7dd3fc;
     margin-top: 0;
     font-size: 1.3rem;
     font-weight: 800;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .about-section p {
@@ -310,9 +314,9 @@ section strong {
 }
 
 .about-section a {
-    color: var(--sky-blue);
+    color: #7dd3fc;
     font-weight: 800;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     text-decoration: underline;
 }
 
@@ -379,12 +383,13 @@ section strong {
 
 .cell a {
     font-weight: 700;
-    color: var(--sky-blue);
+    color: #1e40af;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .cell a:hover {
-    color: #ffffff;
+    color: #1e3a8a;
+    text-decoration: underline;
 }
 
 /* ============================================
@@ -507,7 +512,7 @@ button[type="button"]:hover {
 }
 
 .post-content {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
     padding: var(--spacing-lg);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
@@ -644,12 +649,13 @@ a.nav {
 }
 
 .comments-section h3 {
-    color: #ffffff;
+    color: #7dd3fc;
     font-size: 1.3rem;
     margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .comments-section h3::before {
@@ -657,7 +663,7 @@ a.nav {
 }
 
 .comment {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
@@ -686,7 +692,7 @@ a.nav {
 }
 
 #comment-input {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
     margin-top: var(--spacing-lg);
@@ -694,14 +700,15 @@ a.nav {
 }
 
 #comment-input h3 {
-    color: #ffffff;
+    color: #7dd3fc;
     margin-top: 0;
     font-size: 1.1rem;
     font-weight: 800;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 #comment-advice {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.10);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
     text-align: center;
@@ -769,8 +776,8 @@ main > header h1,
 body > header:first-of-type + header h1 {
     margin: 0 0 var(--spacing-sm) 0;
     font-size: 2.2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    color: #7dd3fc;
 }
 
 main > header p,
@@ -885,16 +892,18 @@ body:has(main > section:only-child) main {
    ============================================ */
 /* Admin section heading */
 section h2 {
-    color: #ffffff;
+    color: #7dd3fc;
     font-weight: 700;
     margin-top: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 section h3 {
-    color: #ffffff;
+    color: #7dd3fc;
     font-weight: 700;
     margin-top: var(--spacing-2xl);
     margin-bottom: var(--spacing-md);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* Admin table styling */
